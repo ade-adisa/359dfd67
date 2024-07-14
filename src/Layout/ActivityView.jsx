@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {FormatTime, FormatDate} from '../Helper/DateandTimeHelper.js';
 import Button from '../Components/Button.jsx';
 import CallChip from '../Components/CallChip.jsx';
 import ActivityDetail from './ActivityDetail.jsx';
@@ -93,22 +92,25 @@ const ActivityView = () => {
     }
 
     return (
-        <div className=''>
-            <div className='flex px-4 justify-between border-b '>
+        <div>
+            {/* HEADER AND TABS */}
+            <div className="flex px-4 justify-between items-center border-b">
                 <Header/>
                 <Tabs action={tabAction} active={activeTab}/>
             </div>
 
+            {/* ARCHIVE/UNARCHIVE BUTTON */}
             {archived ?
                 <Button label={"Restore all calls"} clickAction={unArchiveAllAction} hide={detailView} unarchive disabled={callData.filter(call => call.is_archived).length === 0}/>
                 :
                 <Button label={"Archive all calls"} clickAction={archiveAllAction} hide={detailView} disabled={callData.filter(call => !call.is_archived).length === 0}/>
             }
 
+            {/* LIST VIEWS */}
             <div className='overflow-x-auto	overflow-y-auto pb-4' style={{maxHeight: "calc(666px - 200px)"}}>
                 {detailView ?
                     <ActivityDetail id={detailId} backAction={() => setDetailView(false)}/>
-                :
+                    :
                     <CallChip data={callData.filter(call => call.is_archived === archived)} clickAction={showDetailAction} archiveAction={archiveAction} unarchiveAction={unarchiveAction}/>
                 }
             </div>
