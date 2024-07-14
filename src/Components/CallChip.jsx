@@ -8,12 +8,11 @@ const CallChip = ({data, clickAction, archiveAction, unarchiveAction}) => {
   return (
     <div>
         {data.map(item => FormatDate(item.created_at)).filter((value, index, self) => self.indexOf(value) === index).map(call => 
-            <div className="flex flex-col">
+            <div className="flex flex-col" key={call.id}>
                 <h2 className='border-b border-dashed border-gray-800 w-full text-center mt-3 mb-4' style={{lineHeight: "0.1em"}}><span className="px-2 uppercase bg-white text-center">{call}</span></h2>
                 {data.filter(day => FormatDate(day.created_at) === call).map(callChip => 
                     <div role="button"
                         key={callChip.id}
-                        id={callChip.id}
                         className="border-gray-400 border rounded-lg mb-2 mt-2 mx-4 text-800 p-2 flex items-center justify-between bg-white hover:bg-slate-50"
                         onKeyDown={undefined}
                         onClick={() => clickAction(callChip.id)}

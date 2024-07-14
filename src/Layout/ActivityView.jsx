@@ -15,16 +15,15 @@ const ActivityView = () => {
     const [activeTab, setActiveTab] = useState("Inbox");
     const [detailId, setDetailId] = useState("");
     const [detailView, setDetailView] = useState(false);
-
-
-
+    const [refreshView, setRefreshView] = useState();
     const BASE_URL = "https://aircall-backend.onrender.com"
 
     useEffect(() => {
         fetch(`${BASE_URL}/activities`)
           .then(res => res.json())
-          .then(data => setCallData(data));
-    }, []);
+          .then(data => setCallData(data))
+          .catch(error => console.error(error));
+    }, [refreshView]);
 
     const archiveAction = (e, call_id) => {
         e.stopPropagation();
@@ -37,6 +36,8 @@ const ActivityView = () => {
               method: 'PATCH',                                                              
               body: JSON.stringify(updatedData[0])
         })
+        .then(data => setRefreshView(data))
+        .catch(error => console.error(error))
     }
 
     const unarchiveAction = (e, call_id) => {
@@ -50,20 +51,22 @@ const ActivityView = () => {
               method: 'PATCH',                                                              
               body: JSON.stringify(updatedData[0])
         })
-        console.log(updatedData);
+        .then(data => setRefreshView(data))
+        .catch(error => console.error(error))
     }
 
     const archiveAllAction = () => {
         const updatedData = callData.filter(e => !e.is_archived).map(dat => ({...dat, is_archived: true}))
-        updatedData.forEach((element) => 
-            fetch(`${BASE_URL}/activities/${element.id}`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'PATCH',                                                              
-                body: JSON.stringify(element)
-            })
+        updatedData.forEach((element) => fetch(`${BASE_URL}/activities/${element.id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify(element)
+        })
+        .then(data => setRefreshView(data))
+        .catch(error => console.error(error))
         );
     }
 
@@ -74,8 +77,9 @@ const ActivityView = () => {
                 'Content-Type': null
             },
             method: 'PATCH',                                                              
-        });
-        // location.reload();
+        })
+        .then(data => setRefreshView(data))
+        .catch(error => console.error(error));
     }
 
     const tabAction = (label) => {
