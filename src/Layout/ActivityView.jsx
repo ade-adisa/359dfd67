@@ -75,10 +75,10 @@ const ActivityView = () => {
             },
             method: 'PATCH',                                                              
         });
-        // window.location.reload();
+        // location.reload();
     }
 
-    const tabAction = (e, label) => {
+    const tabAction = (label) => {
         setActiveTab(label);
         setArchived(label === "Archive" ? true : false);
     }
@@ -96,19 +96,18 @@ const ActivityView = () => {
             </div>
 
             {archived ?
-                <Button label={"Restore all calls"} clickAction={unArchiveAllAction} hide={detailView} unarchive/>
+                <Button label={"Restore all calls"} clickAction={unArchiveAllAction} hide={detailView} unarchive disabled={callData.filter(call => call.is_archived).length === 0}/>
                 :
-                <Button label={"Archive all calls"} clickAction={archiveAllAction} hide={detailView}/>
+                <Button label={"Archive all calls"} clickAction={archiveAllAction} hide={detailView} disabled={callData.filter(call => !call.is_archived).length === 0}/>
             }
 
-            <div className='overflow-x-auto	overflow-y-auto pb-4' style={{width: "inherit", maxHeight: "calc(666px - 200px)"}}>
+            <div className='overflow-x-auto	overflow-y-auto pb-4' style={{maxHeight: "calc(666px - 200px)"}}>
                 {detailView ?
                     <ActivityDetail id={detailId} backAction={() => setDetailView(false)}/>
                 :
                     <CallChip data={callData.filter(call => call.is_archived === archived)} clickAction={showDetailAction} archiveAction={archiveAction} unarchiveAction={unarchiveAction}/>
                 }
             </div>
-
         </div>
     )
 }

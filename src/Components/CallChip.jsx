@@ -4,19 +4,19 @@ import Incoming from '../Helper/Incoming.jsx';
 import Archive from '../Helper/Archive.jsx';
 import Outgoing from '../Helper/Outgoing.jsx';
 
-const CallChip = (props) => {
+const CallChip = ({data, clickAction, archiveAction, unarchiveAction}) => {
   return (
-    <div className="">
-        {props.data.map(item => FormatDate(item.created_at)).filter((value, index, self) => self.indexOf(value) === index).map(call => 
+    <div>
+        {data.map(item => FormatDate(item.created_at)).filter((value, index, self) => self.indexOf(value) === index).map(call => 
             <div className="flex flex-col">
                 <h2 className='border-b border-dashed border-gray-800 w-full text-center mt-3 mb-4' style={{lineHeight: "0.1em"}}><span className="px-2 uppercase bg-white text-center">{call}</span></h2>
-                {props.data.filter(day => FormatDate(day.created_at) === call).map(callChip => 
+                {data.filter(day => FormatDate(day.created_at) === call).map(callChip => 
                     <div role="button"
                         key={callChip.id}
                         id={callChip.id}
                         className="border-gray-400 border rounded-lg mb-2 mt-2 mx-4 text-800 p-2 flex items-center justify-between bg-white hover:bg-slate-50"
                         onKeyDown={undefined}
-                        onClick={() => props.clickAction(callChip.id)}
+                        onClick={() => clickAction(callChip.id)}
                     >
                         <div className="flex items-center cursor-pointer justify-between max-w-full flex-1">
                             <span className="flex items-center justify-start w-3/4" style={{ maxWidth: "60%"}}>
@@ -37,7 +37,7 @@ const CallChip = (props) => {
                                     {FormatTime(callChip.created_at)}
                                 </span>
                                 <span className="flex items-center text-xs">
-                                    <button type="button" className='bg-white p-1 pl-2 rounded-lg text-indigo-950 bg-slate-200 font-semibold flex items-center flex-1' onClick={(e)=>{callChip.is_archived ? props.unarchiveAction(e, callChip.id) : props.archiveAction(e, callChip.id)}}><Archive unarchive={callChip.is_archived}/></button>
+                                    <button type="button" className='bg-white p-1 pl-2 rounded-lg text-indigo-950 font-semibold flex items-center flex-1' onClick={(e)=>{callChip.is_archived ? unarchiveAction(e, callChip.id) : archiveAction(e, callChip.id)}}><Archive unarchive={callChip.is_archived}/></button>
                                 </span>
                             </span>
                         </div>
