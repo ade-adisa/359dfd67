@@ -17,7 +17,7 @@ const ActivityDetail = ({id, backAction}) => {
 
     return (
         <div>
-            <span className={`mx-4 py-2 bg-emerald-100 hover:bg-emerald-200 border-1 rounded-lg`}><button className="my-3 px-3 text-md" onClick={backAction}>Back</button></span>
+            <span className={`mx-4 py-2 bg-indigo-100 hover:bg-indigo-200 border-1 rounded-lg`}><button className="my-3 px-3 text-md" onClick={backAction}>Back</button></span>
             <div className="mx-4 pt-4 font-semibold border-t" style={{marginTop: 8, paddingTop: 6, borderTop: "1px solid lightgray"}}>Details</div>
             <div key={detailData.id}
                 id={detailData.id} className="border-gray-400 border rounded-lg mb-2 mt-2 mx-4 text-800 p-2 flex items-center justify-between bg-white"

@@ -7,9 +7,9 @@ import Outgoing from '../Helper/Outgoing.jsx';
 const CallChip = ({data, clickAction, archiveAction, unarchiveAction}) => {
   return (
     <div>
-        {data.map(item => FormatDate(item.created_at)).filter((value, index, self) => self.indexOf(value) === index).map(call => 
+        {data.length > 0 ? data.map(item => FormatDate(item.created_at)).filter((value, index, self) => self.indexOf(value) === index).map(call => 
             <div className="flex flex-col" key={call.id}>
-                <h2 className='border-b border-dashed border-gray-800 w-full text-center mt-3 mb-4' style={{lineHeight: "0.1em"}}><span className="px-2 uppercase bg-white text-center">{call}</span></h2>
+                <h2 className='border-b border-dashed border-gray-400 w-full text-center mt-3 mb-4' style={{lineHeight: "0.1em"}}><span className="px-2 uppercase bg-white text-center text-gray-500">{call}</span></h2>
                 {data.filter(day => FormatDate(day.created_at) === call).map(callChip => 
                     <div role="button"
                         key={callChip.id}
@@ -43,7 +43,12 @@ const CallChip = ({data, clickAction, archiveAction, unarchiveAction}) => {
                     </div>
                 )}
             </div>
-        )}
+        )
+        : 
+        <div className={`flex items-center text-center justify-center`} style={{height: "calc(666px - 200px)"}}>
+            No logs here
+        </div>
+    }
     </div>
   )
 }

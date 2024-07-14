@@ -19,7 +19,7 @@ export const parseDate = (date) => {
 
   const shortMonthOption = {
     year: "numeric",
-    month: "short",
+    month: "long",
     day: "numeric"
   };
 
