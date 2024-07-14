@@ -1,0 +1,27 @@
+html, body, h1, h2, h3, ul, li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+}
+
+body {
+  background: #233142;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+  color: #333333;
+  line-height: 1;
+}
+
+.circle {
+  width: 1rem;
+  height: 1rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  font-size: .5rem;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  background: #e90000
+}
